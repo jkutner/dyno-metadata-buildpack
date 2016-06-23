@@ -4,9 +4,11 @@
 # fail fast
 set -e
 
+BUILD_DIR=$1
+
 HEROKU_APP_NAME=$(echo "$RECEIVE_DATA" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["push_metadata"]["app_info"]["name"]')
 
-mkdir -p .profile.d
-cat <<EOF > .profile.d/heroku-metadata.sh
+mkdir -p ${BUILD_DIR}/.profile.d
+cat <<EOF > ${BUILD_DIR}/.profile.d/heroku-metadata.sh
 export HEROKU_APP_NAME=${HEROKU_APP_NAME}
 EOF
