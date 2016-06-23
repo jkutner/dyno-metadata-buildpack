@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir> <env-dir>
+
+# fail fast
+set -e
+
+HEROKU_APP_NAME=$(echo "$RECEIVE_DATA" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["push_metadata"]["name"]')
+
+mkdir -p .profile.d
+cat <<EOF > .profile.d/heroku-metadata.sh
+export HEROKU_APP_NAME=${HEROKU_APP_NAME}
+EOF
